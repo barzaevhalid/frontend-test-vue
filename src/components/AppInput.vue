@@ -3,6 +3,7 @@
     <label class="desc"> {{ label }}</label>
     <input
       class="data"
+      :class="{ invalid: error }"
       :type="type"
       :placeholder="placeholder"
       :name="name"
@@ -65,6 +66,9 @@ export default {
   padding: 10px 0 10px 15px;
   font-size: 12px;
   width: 100%;
+}
+input.invalid {
+  border: 1px solid rgba(255, 132, 132, 1);
 }
 .warning {
   color: rgba(255, 132, 132, 1);

@@ -11,7 +11,7 @@
       <div class="wrap">
         <label class="desc">Описание товара</label>
         <textarea
-          class="data"
+          class="data price"
           placeholder="Введите описание товара"
           rows="5"
           name="desc"
@@ -25,14 +25,21 @@
         label="Ссылка на изображение товара"
         v-model="linkToProductImage"
       />
-      <app-input
-        type="number"
-        placeholder="Введите цену товара"
+      <label class="desc">Цена товара</label>
+      <input
+        placeholder="Введите цену"
+        class="data price"
+        :class="{ invalid: error }"
+        type="text"
         name="price"
-        label="Цена товара"
         v-model="productPrice"
+        @input="spaceValue"
+        @blur="isValid"
       />
-      <button class="form-btn" type="submit">Добавить товар</button>
+      <div class="warning" v-if="error">Поле является обязательным</div>
+      <button class="form-btn" type="submit" :disabled="btnValidate()">
+        Добавить товар
+      </button>
     </form>
   </div>
 </template>
@@ -50,12 +57,37 @@ export default {
       productStory: "",
       linkToProductImage: "",
       productPrice: "",
+      btnDisable: true,
+      error: false,
     };
   },
   methods: {
+    isValid() {
+      if (this.productPrice.length === 0) {
+        this.error = true;
+      } else {
+        this.error = false;
+      }
+    },
+    spaceValue(e) {
+      this.error = false;
+      this.productPrice = e.target.value
+        .replace(/[^\d]/g, "")
+        .replace(/\B(?=(?:\d{3})+(?!\d))/g, " ");
+    },
+    btnValidate() {
+      if (
+        this.productName.length !== 0 &&
+        this.linkToProductImage.length !== 0 &&
+        this.productPrice.length !== 0
+      ) {
+        return false;
+      } else {
+        return true;
+      }
+    },
     onSubmit(e) {
       e.preventDefault();
-
       if (this.formIsValid()) {
         console.log(this.productName);
         console.log(this.productStory);
@@ -80,7 +112,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .side-form {
   width: 330px;
   background-color: #fffefb;
@@ -100,8 +132,28 @@ export default {
   font-size: 12px;
   width: 100%;
 }
+.data.price {
+  outline: none;
+  border: 1px solid rgba(0, 0, 0, 0);
+  border-radius: 3px;
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.1);
+}
+.data.price.invalid {
+  border: 1px solid rgba(255, 132, 132, 1);
+}
+.data.price:active,
+.data.price:focus {
+  border: 1px solid green;
+}
 .wrap {
   margin-top: 15px;
+}
+.warning {
+  color: rgba(255, 132, 132, 1);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  margin-top: 5px;
 }
 .form-btn {
   display: block;
@@ -115,15 +167,19 @@ export default {
   font-family: "Inter";
   padding: 10px 0;
   border: none;
-  cursor: pointer;
+}
+.form-btn:active {
+  box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.3);
 }
 .form-btn:hover {
   cursor: pointer;
   opacity: 0.8;
 }
-
-.form-btn:active {
-  box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.3);
+.form-btn[disabled] {
+  background: rgba(238, 238, 238, 1);
+  box-shadow: none;
+  cursor: default;
+  opacity: 1;
 }
 </style>
 
