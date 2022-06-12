@@ -27,24 +27,12 @@ export default {
   updated() {
     localStorage.setItem("store", JSON.stringify(this.$store.getters.products));
   },
-  // created() {
-  //   const p = JSON.parse(localStorage.getItem("store"));
-  //   if (p.length > 0) {
-  //     for (let i = 0; i < p.length; i++) {
-  //       this.$store.commit("addProduct", p[i]);
-  //     }
-  //   }
-  // },
-  // beforeUpdate() {
-  //   const localStorageArray = JSON.parse(localStorage.getItem("store"));
-  //   console.log(localStorageArray);
-  //   for (let i = 0; i < localStorageArray.length; i++) {
-  //     this.$store.commit({
-  //       type: "addProduct",
-  //       payload: localStorageArray[i],
-  //     });
-  //   }
-  // },
+  created() {
+    const p = JSON.parse(localStorage.getItem("store"));
+    if (p) {
+      this.$store.commit("updateProducts", p);
+    }
+  },
 };
 </script>
 

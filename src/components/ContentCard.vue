@@ -7,7 +7,9 @@
         alt="card"
         @click="removeItem"
       />
-      <img class="img" :src="imgLink" alt="Нет картинки" />
+      <div class="img_inner">
+        <img class="img" :src="imgLink" alt="Нет картинки" />
+      </div>
       <div class="desc-wrap">
         <div class="title">{{ name }}</div>
         <div class="description">
@@ -50,8 +52,12 @@ export default {
   box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.04),
     0px 6px 10px rgba(0, 0, 0, 0.02);
 }
-.img {
+.img_inner {
   height: 200px;
+  background-color: lightgray;
+}
+.img {
+  height: 100%;
   width: 100%;
 }
 .img-card {

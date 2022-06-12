@@ -2,11 +2,11 @@
   <div class="container">
     <div class="head">
       <h2>Добавление товара</h2>
-      <select class="select">
-        <option class="selected">По умолчанию</option>
-        <option class="selected">Минимальная цена</option>
-        <option class="selected">Мксимальная цена</option>
-        <option class="selected">По названию</option>
+      <select class="select" v-model="select">
+        <option class="selected" value="all">По умолчанию</option>
+        <option class="selected" value="min">Минимальная цена</option>
+        <option class="selected" value="max">Максимальная цена</option>
+        <option class="selected" value="name">По названию</option>
       </select>
     </div>
 
@@ -25,6 +25,18 @@ export default {
   components: {
     SideForm,
     MainContent,
+  },
+  data() {
+    return {
+      select: "all",
+    };
+  },
+  updated() {
+    this.$store.commit({
+      type: "selected",
+      value: this.select,
+    });
+    localStorage.setItem("select", JSON.stringify(this.select));
   },
 };
 </script>

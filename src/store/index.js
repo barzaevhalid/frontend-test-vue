@@ -4,7 +4,7 @@ export default createStore({
   state() {
     return {
       products: [],
-      filter: "name",
+      filter: "all",
     };
   },
   getters: {
@@ -30,6 +30,9 @@ export default createStore({
     },
   },
   mutations: {
+    updateProducts(state, payload) {
+      state.products = payload;
+    },
     addProduct(state, payload) {
       state.products.push(payload.value);
       console.log(state);
@@ -39,6 +42,9 @@ export default createStore({
     },
     filter(state, payload) {
       state.filter = payload;
+    },
+    selected(state, payload) {
+      state.filter = payload.value;
     },
   },
   actions: {},
