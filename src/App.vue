@@ -4,7 +4,9 @@
       <h2>Добавление товара</h2>
       <select class="select">
         <option class="selected">По умолчанию</option>
-        <option class="selected">Цена</option>
+        <option class="selected">Минимальная цена</option>
+        <option class="selected">Мксимальная цена</option>
+        <option class="selected">По названию</option>
       </select>
     </div>
 

@@ -1,15 +1,19 @@
 <template>
   <div class="card">
     <div class="card-inner">
-      <img class="img-card" src="./../assets/card.png" alt="card" />
-      <img class="img" src="./../assets/image.png" alt="img" />
+      <img
+        class="img-card"
+        src="./../assets/card.png"
+        alt="card"
+        @click="removeItem"
+      />
+      <img class="img" :src="imgLink" alt="Нет картинки" />
       <div class="desc-wrap">
-        <div class="title">Наименование товара</div>
+        <div class="title">{{ name }}</div>
         <div class="description">
-          Довольно-таки интересное описание товара в несколько строк.
-          Довольно-таки интересное описание товара в несколько строк
+          {{ productStory }}
         </div>
-        <div class="price">10 000 руб.</div>
+        <div class="price">{{ price }}: руб.</div>
       </div>
     </div>
   </div>
@@ -18,6 +22,18 @@
 <script>
 export default {
   name: "ContentCard",
+  props: {
+    id: Number,
+    name: String,
+    imgLink: String,
+    productStory: String,
+    price: String,
+  },
+  methods: {
+    removeItem() {
+      this.$store.commit("removeProduct", this.id);
+    },
+  },
 };
 </script>
 
@@ -36,6 +52,7 @@ export default {
 }
 .img {
   height: 200px;
+  width: 100%;
 }
 .img-card {
   position: absolute;

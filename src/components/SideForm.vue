@@ -41,6 +41,9 @@
         Добавить товар
       </button>
     </form>
+    <div class="animation" :class="{ show: animation }">
+      Товар успешно добавлен
+    </div>
   </div>
 </template>
 
@@ -59,6 +62,7 @@ export default {
       productPrice: "",
       btnDisable: true,
       error: false,
+      animation: false,
     };
   },
   methods: {
@@ -89,10 +93,25 @@ export default {
     onSubmit(e) {
       e.preventDefault();
       if (this.formIsValid()) {
-        console.log(this.productName);
-        console.log(this.productStory);
-        console.log(this.linkToProductImage);
-        console.log(this.productPrice);
+        this.$store.commit({
+          type: "addProduct",
+          value: {
+            id: Math.random(),
+            name: this.productName,
+            imgLink: this.linkToProductImage,
+            productStory: this.productStory,
+            price: this.productPrice,
+          },
+        });
+        this.animation = true;
+        setTimeout(() => {
+          this.animation = false;
+        }, 2000);
+
+        this.productName = "";
+        this.linkToProductImage = "";
+        this.productStory = "";
+        this.productPrice = "";
       }
     },
     formIsValid() {
@@ -179,6 +198,18 @@ export default {
   background: rgba(238, 238, 238, 1);
   box-shadow: none;
   cursor: default;
+  opacity: 1;
+}
+.animation {
+  width: 330px;
+  background-color: green;
+  color: #fff;
+  padding: 5px 0 5px 10px;
+  border-radius: 3px;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+.show {
   opacity: 1;
 }
 </style>
