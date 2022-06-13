@@ -2,8 +2,8 @@
   <div class="container">
     <div class="head">
       <h2>Добавление товара</h2>
-      <select class="select" v-model="select">
-        <option class="selected" value="all">По умолчанию</option>
+      <select class="select" v-model="select" @change="addSelectLocalStorage">
+        <option class="selected" value="">По умолчанию</option>
         <option class="selected" value="min">Минимальная цена</option>
         <option class="selected" value="max">Максимальная цена</option>
         <option class="selected" value="name">По названию</option>
@@ -28,15 +28,23 @@ export default {
   },
   data() {
     return {
-      select: "all",
+      select: "",
     };
   },
-  updated() {
-    this.$store.commit({
-      type: "selected",
-      value: this.select,
-    });
-    localStorage.setItem("select", JSON.stringify(this.select));
+  methods: {
+    addSelectLocalStorage() {
+      this.$store.commit({
+        type: "selected",
+        value: this.select,
+      });
+      localStorage.setItem("select", JSON.stringify(this.select));
+    },
+  },
+  mounted() {
+    const a = JSON.parse(localStorage.getItem("select"));
+    if (a) {
+      this.select = a;
+    }
   },
 };
 </script>

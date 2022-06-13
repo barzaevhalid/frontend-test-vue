@@ -4,13 +4,16 @@ export default createStore({
   state() {
     return {
       products: [],
-      filter: "all",
+      filter: "",
     };
   },
   getters: {
+    returnFilter(state) {
+      return state.filter;
+    },
     products(state) {
       switch (state.filter) {
-        case "all":
+        case "":
           return state.products;
         case "min": {
           const filteredMin = state.products.sort((a, b) => a.price - b.price);
@@ -45,6 +48,7 @@ export default createStore({
     },
     selected(state, payload) {
       state.filter = payload.value;
+      console.log(state);
     },
   },
   actions: {},
