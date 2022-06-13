@@ -4,7 +4,7 @@ export default createStore({
   state() {
     return {
       products: [],
-      filter: "",
+      filter: "all",
     };
   },
   getters: {
@@ -13,21 +13,19 @@ export default createStore({
     },
     products(state) {
       switch (state.filter) {
-        case "":
+        case "all":
           return state.products;
         case "min": {
-          const filteredMin = state.products.sort((a, b) => a.price - b.price);
-          return filteredMin;
+          const storeClone = [...state.products];
+          return storeClone.sort((a, b) => a.price - b.price);
         }
         case "max": {
-          const filteredMax = state.products.sort((a, b) => b.price - a.price);
-          return filteredMax;
+          const storeClone = [...state.products];
+          return storeClone.sort((a, b) => b.price - a.price);
         }
         case "name": {
-          const filteredName = state.products.sort((a, b) =>
-            a.name > b.name ? 1 : -1
-          );
-          return filteredName;
+          const storeClone = [...state.products];
+          return storeClone.sort((a, b) => (a.name > b.name ? 1 : -1));
         }
       }
     },

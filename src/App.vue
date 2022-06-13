@@ -3,7 +3,7 @@
     <div class="head">
       <h2>Добавление товара</h2>
       <select class="select" v-model="select" @change="addSelectLocalStorage">
-        <option class="selected" value="">По умолчанию</option>
+        <option class="selected" value="all">По умолчанию</option>
         <option class="selected" value="min">Минимальная цена</option>
         <option class="selected" value="max">Максимальная цена</option>
         <option class="selected" value="name">По названию</option>
@@ -28,7 +28,7 @@ export default {
   },
   data() {
     return {
-      select: "",
+      select: this.$store.getters.returnFilter,
     };
   },
   methods: {
